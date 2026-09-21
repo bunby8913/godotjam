@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://cfc4rb31ctajb"]
+
+[ext_resource type="PackedScene" uid="uid://br20d8vomgg75" path="res://assets/prototype_rounded_cube.glb" id="1_6jnbo"]
+[ext_resource type="Script" uid="uid://d3ne83knbkb5m" path="res://scripts/prototype_rounded_cube.gd" id="2_roll"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cube"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uqmgk"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5nrrk"]
+size = Vector2(50, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(50, 0.2, 50)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+
+[sub_resource type="Sky" id="Sky_env"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_env"]
+background_mode = 2
+sky = SubResource("Sky_env")
+ambient_light_source = 3
+ambient_light_energy = 0.6
+
+[node name="Node3D" type="Node3D" unique_id=1500622561]
+
+[node name="prototype_rounded_cube" type="AnimatableBody3D" parent="." unique_id=286481632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+sync_to_physics = false
+script = ExtResource("2_roll")
+
+[node name="Mesh" parent="prototype_rounded_cube" unique_id=144370830 instance=ExtResource("1_6jnbo")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="prototype_rounded_cube" unique_id=1527560449]
+shape = SubResource("BoxShape3D_cube")
+
+[node name="Camera3D" type="Camera3D" parent="prototype_rounded_cube" unique_id=107147645]
+transform = Transform3D(1, 0, 0, 0, 0.7274621, 0.6861479, 0, -0.6861479, 0.7274621, 0, 3.7956452, 4.3930473)
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=1251074656]
+material_override = SubResource("StandardMaterial3D_uqmgk")
+mesh = SubResource("PlaneMesh_5nrrk")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor" unique_id=68834139]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" unique_id=1404585897]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_floor")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=19303720]
+environment = SubResource("Environment_env")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1091262366]
+transform = Transform3D(0.8191521, 0.4393851, -0.3686878, 0, 0.6427876, 0.7660444, 0.5735765, -0.6275069, 0.5265408, 0, 12, 0)
+shadow_enabled = true
